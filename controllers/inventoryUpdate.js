@@ -2,6 +2,11 @@ const fetch = require('node-fetch');
 const shops = require('../config');
 const { modifyAvailability } = require('../helpers');
 
+/*
+* Takes care of the main functionality:
+*   When a webhook is triggered, GETs the current inventory levels from all shops,
+*   POSTs the new inventory-level value to all shops, and stores the new availability value locally.
+*/ 
 function inventoryUpdate(data) {
     const [inventoryData, idToSku] = data;
 
@@ -11,10 +16,21 @@ function inventoryUpdate(data) {
         const sku = idToSku[modifiedItemId];
 
         try {
-            const [availabilityData, totalChange] = await getShopsAvailabilityData(shops, inventoryData, sku);
+            const [availabilityData, totalChange] = await getShopsAvailabilityData(
+                shops,
+                inventoryData,
+                sku
+            );
 
             if (totalChange !== 0) {
-                await postDataToShops(shops, inventoryData, sku, availabilityData, totalChange);
+                await postDataToShops(
+                    shops,
+                    inventoryData,
+                    sku,
+                    availabilityData,
+                    totalChange
+                );
+                
                 inventoryData[sku].available += totalChange;
             }
 
@@ -76,9 +92,19 @@ async function postDataToShops(shops, inventoryData, sku, availabilityData, tota
                 available: currentAvailability + totalChange,
             };
 
-            const modifyAvailabilityResponse = await modifyAvailability(apiCredentials, domain, API_ENDPOINT, dataToSend);
+            const modifyAvailabilityResponse = await modifyAvailability(
+                apiCredentials,
+                domain,
+                API_ENDPOINT,
+                dataToSend
+            );
+
             const modifyAvailabilityData = await modifyAvailabilityResponse.json();
-            console.log(`Inventory level for item ${sku} modified in shop ${shop.name}: ${modifyAvailabilityData.inventory_level.available}`);
+
+            console.log(`
+                Inventory level for item ${sku} modified in shop ${shop.name}:
+                ${modifyAvailabilityData.inventory_level.available}
+            `);
         }
     }
 }
