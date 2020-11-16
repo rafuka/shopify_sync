@@ -9,7 +9,7 @@
 Optinally, you can run `npm run startWithSync` to sync the whole inventory -- based on the values of the first store defined in the `config.js` file -- at the app's setup.
 
 
-# Summary
+# Technical Summary
 
 This app allows to synchronize the inventory between two or more stores. In order to register a store, a [private app](https://shopify.dev/tutorials/authenticate-a-private-app-with-shopify-admin) must be created on Shopify's store dashboard, and an entry must be added to the `config.js` file with the necessary data. Namely the shop's name, domain, [api credentials](https://shopify.dev/tutorials/generate-api-credentials#generate-credentials-in-the-shopify-admin), and [webhooks' secret](https://shopify.dev/tutorials/manage-webhooks#verifying-webhooks).
 
