@@ -2,7 +2,7 @@
 
 1. Clone repo.
 2. Set a tunnel to expose the local address (e.g. by using [ngrok](https://ngrok.com/) and running `ngrok http 3000`).
-3. Copy the .env.example file into a .env file and modify the exposed address and port (`APP_ADDRESS` and `PORT` respectively) using the exposed address from the previous step.
+3. Copy the `.env.example` file into a `.env` file and modify the exposed address and port (`APP_ADDRESS` and `PORT` respectively) using the exposed address from the previous step.
 4. Run `npm install`.
 5. Run `npm run start`.
 
@@ -34,5 +34,3 @@ The app synchronizes the inventory whenever
 
  - It is assumed that the inventory in both shops is equal. That is to say, the same product variants, with their respective SKU codes are present in the stores to be synchronized. It'd be interesting to extend the app to use a database that would act as the source of truth for product variants to be synchronized. Then some functionality to create these products in the registered stores could be added. 
  - It might be useful to add separate endpoints for each store associated with Webhooks. Currently the webhooks are processed by the same endpoint. I'd need to do more research to be sure what, if any, would be the advantages of this.
-
-
